@@ -9,7 +9,11 @@ interface ImagesData {
   total_pages: number;
 }
 
-export const fetchHits = async (query: string, page: number, signal: any): Promise<ImagesData> => {
+export const fetchHits = async (
+  query: string,
+  page: number,
+  signal: AbortSignal
+): Promise<ImagesData> => {
   const response = await axios.get<ImagesData>(
     `https://api.unsplash.com/search/photos?client_id=${MY_KEY}&query=${query}&page=${page}`,
     { signal }
