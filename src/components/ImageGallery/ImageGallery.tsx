@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
 import ImageCard from '../ImageCard/ImageCard';
 import s from './ImageGallery.module.css';
+import { Image } from '../App.types';
 
-const ImageGallery = ({ arr, handleOpenImage }) => {
+interface ImageGalleryProps {
+  arr: Image[];
+  handleOpenImage: (img: string) => void;
+}
+
+const ImageGallery: FC<ImageGalleryProps> = ({ arr, handleOpenImage }) => {
   return (
     <div>
       {arr.length > 0 && (

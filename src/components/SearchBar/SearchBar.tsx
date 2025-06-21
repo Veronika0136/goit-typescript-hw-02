@@ -1,14 +1,22 @@
-import React from 'react';
-import { Field, Form, Formik } from 'formik';
+import React, { FC } from 'react';
+import { Field, Form, Formik, FormikHelpers } from 'formik';
 import toast from 'react-hot-toast';
 import s from './SearchBar.module.css';
 
-const SearchBar = ({ handleChangeQuery }) => {
-  const initialValues = {
+interface SearchBarProps {
+  handleChangeQuery: (newQuery: string) => void;
+}
+
+interface FormValues {
+  query: string;
+}
+
+const SearchBar: FC<SearchBarProps> = ({ handleChangeQuery }) => {
+  const initialValues: FormValues = {
     query: '',
   };
 
-  const handleSubmit = (values, options) => {
+  const handleSubmit = (values: FormValues, options: FormikHelpers<FormValues>): void => {
     const newQuery = values.query.trim();
     if (newQuery) {
       handleChangeQuery(newQuery);

@@ -7,16 +7,18 @@ import Loader from './Loader/Loader';
 import LoadMoreBtn from './LoadMoreBtn/LoadMoreBtn';
 import ErrorMessage from './ErrorMessage/ErrorMessage';
 import ImageModal from './ImageModal/ImageModal';
+import { string } from 'yup';
+import { Image } from './App.types';
 
 const App = () => {
-  const [hits, setHits] = useState([]);
-  const [query, setQuery] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(0);
-  const [error, setError] = useState(false);
-  const [totalPages, setTotalPages] = useState(0);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [image, setImage] = useState('');
+  const [hits, setHits] = useState<Image[]>([]);
+  const [query, setQuery] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(0);
+  const [error, setError] = useState<boolean>(false);
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false);
+  const [image, setImage] = useState<string>('');
 
   useEffect(() => {
     if (!query) return;
@@ -29,7 +31,7 @@ const App = () => {
         setHits(prev => [...prev, ...data.results]);
         setTotalPages(data.total_pages - 1);
         setError(false);
-      } catch (err) {
+      } catch (err: any) {
         // console.log(err);
         if (err.code !== 'ERR_CANCELED') {
           setError(true);
@@ -44,26 +46,26 @@ const App = () => {
     };
   }, [query, page]);
 
-  const handleChangeQuery = newQuery => {
+  const handleChangeQuery = (newQuery: string): void => {
     setQuery(newQuery);
     setHits([]);
     setPage(0);
     setTotalPages(0);
   };
 
-  const handleChangePage = () => {
+  const handleChangePage = (): void => {
     setPage(page + 1);
   };
 
-  function openModal() {
+  function openModal(): void {
     setModalIsOpen(true);
   }
 
-  function closeModal() {
+  function closeModal(): void {
     setModalIsOpen(false);
   }
 
-  const handleOpenImage = img => {
+  const handleOpenImage = (img: string): void => {
     setImage(img);
     openModal();
   };
